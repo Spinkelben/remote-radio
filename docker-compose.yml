@@ -1,7 +1,7 @@
 version: "3"
 services:
   web:
-    image: spinkelben/remote-radio:v1
+    image: spinkelben/remote-radio:latest
     deploy:
       replicas: 5
       resources:
@@ -12,6 +12,25 @@ services:
         condition: on-failure
     ports:
       - "80:80"
+    networks:
+      - webnet
+    depends_on:
+      - redis
+    environment:
+      - MODE=dev
+    volumes:
+      - /remote-radio/remote:/app:ro
+    devices:
+      - /dev/audio:/dev/audio
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data:/data
+    deploy:
+      placement:
+        constraints: [node.role == manager]
     networks:
       - webnet
 networks:

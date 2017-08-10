@@ -1,1 +1,1 @@
-git+https://git.gnome.org/browse/pygobject
+protobuf

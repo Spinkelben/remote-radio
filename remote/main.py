@@ -1,7 +1,7 @@
 from flask import Flask, abort, request
 from redis import Redis, RedisError
 import os
-import vlc
+import socket
 
 redis = Redis(host="redis", port=6379, db=0, socket_connect_timeout=2, socket_timeout=2)
 
@@ -13,8 +13,6 @@ cur_station = None
 
 def play_station(station):
     print("Playing", station['name'], "from url:\n", station['stream_url'])
-    p = vlc.MediaPlayer(station['stream_url'])
-    p.play()
 
 @app.route('/')
 def hello_world():

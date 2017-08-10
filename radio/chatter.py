@@ -1,22 +1,9 @@
 import socket, os, threading
+from command_server import CommandServer
 
-def echo_data(conn, addr):
-    while True:
-        data = conn.recv(1024)
-        if not data: break
-        conn.send(data)
-    conn.close()
+def echo_data(message):
+    return message
 
-
-s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-try:
-  os.remove('/tmp/chatter-sock')
-except OSError:
-  pass
-s.bind('/tmp/chatter-sock')
-s.listen(5)
-while True:
-  conn, addr = s.accept()
-  print("Accepted Conenction from {}", addr)
-  t = threading.Thread(target=echo_data, kwargs={"conn": conn, "addr": addr})
-  t.start()
+with CommandServer(address='/tmp/chatter-sock', action=echo_data):
+    print("Press enter to close")
+    input()

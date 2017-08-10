@@ -5,7 +5,7 @@ FROM debian:jessie
 WORKDIR /app
 
 # Copy the current directory contents into the container at /app
-ADD . /app
+COPY . /app
 
 # Install PyGObject bindings
 RUN apt-get update && apt-get install -y \

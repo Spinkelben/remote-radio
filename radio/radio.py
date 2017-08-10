@@ -1,9 +1,13 @@
 import gi
 import sys
 gi.require_version('Gst', '1.0')
-from gi.repository import Gst
-import socket, os
+from gi.repository import Gst, GLib
+import socket
+import os
+import time
 from command_server import CommandServer
+from request_handler import RequestHandler
+import threading
 
 def on_tag(bus, msg):
     taglist = msg.parse_tag()
@@ -16,7 +20,7 @@ class InternetRadio():
         self.url = url
         Gst.init(sys.argv)
         self.state = Gst.State.NULL
-        self.player = player = Gst.ElementFactory.make("playbin", "player")
+        self.player = Gst.ElementFactory.make("playbin", "player")
         if not self.player:
             print("ERROR: Could not create playbin.")
             sys.exit(1)
@@ -30,6 +34,7 @@ class InternetRadio():
         bus.connect("message::eos", self.on_eos)
         bus.connect("message::state-changed", self.on_state_changed)
         bus.connect("message::application", self.on_application_message)
+        bus.connect("message", self.on_message)
         print(self.player)
         if self.url is not None:
             self.set_url(self.url)
@@ -69,12 +74,10 @@ class InternetRadio():
         self.player.set_state(Gst.State.READY)
 
     def on_state_changed(self, bus, msg):
-        print("state changed")
-        old, new, pending = msg.parse_state_changed()
         if not msg.src == self.player:
             # not from the player, ignore
             return
-
+        old, new, pending = msg.parse_state_changed()
         self.state = new
         print("State changed from {0} to {1}".format(
             Gst.Element.state_get_name(old), Gst.Element.state_get_name(new)))
@@ -108,42 +111,52 @@ class InternetRadio():
 
 
     def on_application_message(self, bus, msg):
-        print("app_message")
         if msg.get_structure().get_name() == "tags-changed":
             self.analyze_stream()
+        #if msg.type = Gst.MessageType.STATE_CHANGED:
 
-def setup_socket():
-    s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    try:
-      os.remove('/tmp/chatter-sock')
-    except OSError:
-      pass
-    s.bind('/tmp/chatter-sock')
-    s.listen(1)
-    conn, addr = s.accept()
-    return socket
+    def on_message(self, bus, msg):
+        if msg.type == Gst.MessageType.STATE_CHANGED:
+            pass
+        if msg.type == Gst.MessageType.TAG:
+            tags = Gst.Message.parse_tag(msg)
+            tag_strings = []
+            for i in range(0, tags.n_tags()):
+                tag_strings.append(tags.nth_tag_name(i))
+            print("TEST: Tag message with {} tags from {}".format(tag_strings, Gst.Object.get_name(msg.src)))
+        else:
+            print("TEST: Message {} from {}".format(msg.type, msg.src))
 
-
-#wait and let the music play
 def main():
     #our stream to play
     #music_stream_uri = 'http://live-icy.gss.dr.dk/A/A29L.mp3'
     music_stream_uri = 'http://live-icy.gss.dr.dk/A/A29H.mp3'
-    print("HELLO!")
     player = InternetRadio(music_stream_uri)
-    while True:
-        choice = input('(S)top, (P)lay, P(a)use and (Q)uit')
-        choice = str(choice)
-        if choice.lower() == 's':
-            player.stop()
-        elif choice.lower() == 'p':
-            player.play()
-        elif choice.lower() == 'a':
-            player.pause()
-        elif choice.lower() == 'q':
-            exit(0)
-        else:
-            print("Did not understand command {}".format(choice))
+    handler = RequestHandler(player)
+
+    with CommandServer(address='/tmp/radio-sock', action=handler.on_message):
+        try:
+            loop = GLib.MainLoop()
+            t = threading.Thread(target=loop.run)
+            t.start()
+            while True:
+                choice = input('(S)top, (P)lay, P(a)use and (Q)uit')
+                choice = str(choice)
+                if choice.lower() == 's':
+                    player.stop()
+                elif choice.lower() == 'p':
+                    player.play()
+                elif choice.lower() == 'a':
+                    player.pause()
+                elif choice.lower() == 'q':
+                    exit(0)
+                else:
+                    print("Did not understand command {}".format(choice))
+                time.sleep(1)
+        except KeyboardInterrupt:
+            print("Stopping...")
+        finally:
+            loop.quit()
 
 if __name__ == "__main__":
     main()

@@ -19,14 +19,14 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='message.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\rmessage.proto\"}\n\x07\x43ommand\x12\"\n\x04type\x18\x01 \x01(\x0e\x32\x14.Command.CommandType\x12\x0f\n\x07\x63hannel\x18\x02 \x01(\t\"=\n\x0b\x43ommandType\x12\x08\n\x04PLAY\x10\x00\x12\t\n\x05PAUSE\x10\x01\x12\x08\n\x04STOP\x10\x02\x12\x0f\n\x0bSET_CHANNEL\x10\x03\"8\n\x08MetaInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07\x62itrate\x18\x02 \x01(\x05\x12\r\n\x05\x63odec\x18\x03 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\rmessage.proto\"\x87\x01\n\x07Request\x12\"\n\x04type\x18\x01 \x01(\x0e\x32\x14.Request.CommandType\x12\x0f\n\x07\x63hannel\x18\x02 \x01(\t\"G\n\x0b\x43ommandType\x12\x08\n\x04PLAY\x10\x00\x12\t\n\x05PAUSE\x10\x01\x12\x08\n\x04STOP\x10\x02\x12\x0f\n\x0bSET_CHANNEL\x10\x03\x12\x08\n\x04INFO\x10\x04\"I\n\x08Response\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07\x62itrate\x18\x02 \x01(\x05\x12\r\n\x05\x63odec\x18\x03 \x01(\t\x12\x0f\n\x07success\x18\x04 \x01(\x08\x62\x06proto3')
 )
 
 
 
-_COMMAND_COMMANDTYPE = _descriptor.EnumDescriptor(
+_REQUEST_COMMANDTYPE = _descriptor.EnumDescriptor(
   name='CommandType',
-  full_name='Command.CommandType',
+  full_name='Request.CommandType',
   filename=None,
   file=DESCRIPTOR,
   values=[
@@ -46,31 +46,35 @@ _COMMAND_COMMANDTYPE = _descriptor.EnumDescriptor(
       name='SET_CHANNEL', index=3, number=3,
       options=None,
       type=None),
+    _descriptor.EnumValueDescriptor(
+      name='INFO', index=4, number=4,
+      options=None,
+      type=None),
   ],
   containing_type=None,
   options=None,
-  serialized_start=81,
-  serialized_end=142,
+  serialized_start=82,
+  serialized_end=153,
 )
-_sym_db.RegisterEnumDescriptor(_COMMAND_COMMANDTYPE)
+_sym_db.RegisterEnumDescriptor(_REQUEST_COMMANDTYPE)
 
 
-_COMMAND = _descriptor.Descriptor(
-  name='Command',
-  full_name='Command',
+_REQUEST = _descriptor.Descriptor(
+  name='Request',
+  full_name='Request',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='type', full_name='Command.type', index=0,
+      name='type', full_name='Request.type', index=0,
       number=1, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='channel', full_name='Command.channel', index=1,
+      name='channel', full_name='Request.channel', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -81,7 +85,7 @@ _COMMAND = _descriptor.Descriptor(
   ],
   nested_types=[],
   enum_types=[
-    _COMMAND_COMMANDTYPE,
+    _REQUEST_COMMANDTYPE,
   ],
   options=None,
   is_extendable=False,
@@ -89,36 +93,43 @@ _COMMAND = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17,
-  serialized_end=142,
+  serialized_start=18,
+  serialized_end=153,
 )
 
 
-_METAINFO = _descriptor.Descriptor(
-  name='MetaInfo',
-  full_name='MetaInfo',
+_RESPONSE = _descriptor.Descriptor(
+  name='Response',
+  full_name='Response',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='name', full_name='MetaInfo.name', index=0,
+      name='name', full_name='Response.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='bitrate', full_name='MetaInfo.bitrate', index=1,
+      name='bitrate', full_name='Response.bitrate', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='codec', full_name='MetaInfo.codec', index=2,
+      name='codec', full_name='Response.codec', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='success', full_name='Response.success', index=3,
+      number=4, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -134,29 +145,29 @@ _METAINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=144,
-  serialized_end=200,
+  serialized_start=155,
+  serialized_end=228,
 )
 
-_COMMAND.fields_by_name['type'].enum_type = _COMMAND_COMMANDTYPE
-_COMMAND_COMMANDTYPE.containing_type = _COMMAND
-DESCRIPTOR.message_types_by_name['Command'] = _COMMAND
-DESCRIPTOR.message_types_by_name['MetaInfo'] = _METAINFO
+_REQUEST.fields_by_name['type'].enum_type = _REQUEST_COMMANDTYPE
+_REQUEST_COMMANDTYPE.containing_type = _REQUEST
+DESCRIPTOR.message_types_by_name['Request'] = _REQUEST
+DESCRIPTOR.message_types_by_name['Response'] = _RESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-Command = _reflection.GeneratedProtocolMessageType('Command', (_message.Message,), dict(
-  DESCRIPTOR = _COMMAND,
+Request = _reflection.GeneratedProtocolMessageType('Request', (_message.Message,), dict(
+  DESCRIPTOR = _REQUEST,
   __module__ = 'message_pb2'
-  # @@protoc_insertion_point(class_scope:Command)
+  # @@protoc_insertion_point(class_scope:Request)
   ))
-_sym_db.RegisterMessage(Command)
+_sym_db.RegisterMessage(Request)
 
-MetaInfo = _reflection.GeneratedProtocolMessageType('MetaInfo', (_message.Message,), dict(
-  DESCRIPTOR = _METAINFO,
+Response = _reflection.GeneratedProtocolMessageType('Response', (_message.Message,), dict(
+  DESCRIPTOR = _RESPONSE,
   __module__ = 'message_pb2'
-  # @@protoc_insertion_point(class_scope:MetaInfo)
+  # @@protoc_insertion_point(class_scope:Response)
   ))
-_sym_db.RegisterMessage(MetaInfo)
+_sym_db.RegisterMessage(Response)
 
 
 # @@protoc_insertion_point(module_scope)

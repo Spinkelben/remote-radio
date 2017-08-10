@@ -1,18 +1,20 @@
 syntax = "proto3";
 
-message Command {
+message Request {
   enum CommandType {
     PLAY = 0;
     PAUSE = 1;
     STOP = 2;
     SET_CHANNEL = 3;
+    INFO = 4;
   }
   CommandType type = 1;
   string channel = 2;
 }
 
-message MetaInfo {
+message Response {
   string name = 1;
   int32 bitrate = 2;
   string codec = 3;
+  bool success = 4;
 }

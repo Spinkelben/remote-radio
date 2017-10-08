@@ -17,4 +17,8 @@ message Response {
   int32 bitrate = 2;
   string codec = 3;
   bool success = 4;
+  string title = 5;
+  string extra = 6;
+  string location = 7;
+  bool stereo = 8;
 }

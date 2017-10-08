@@ -1,7 +1,7 @@
 version: "3"
 services:
-  web:
-    image: spinkelben/remote-radio-webserver:latest
+  web-api:
+    image: spinkelben/remote-radio-webapi:latest
     deploy:
       replicas: 1
       resources:
@@ -19,11 +19,17 @@ services:
     environment:
       - MODE=dev
     volumes:
-      - /media/sf_remote-radio/remote:/app:ro
+      - /media/sf_remote-radio/radio_api:/app:ro
+      - socketvolume:/var/sockets
   radio:
-    image: spinkelben/remote-radio:latest
+    image: spinkelben/remote-radio-app:latest
     devices:
-      - /dev/snd
+      - /dev/snd:/dev/snd
+    volumes:
+      - /media/sf_remote-radio/radio_app:/app:ro
+      - socketvolume:/var/sockets
+    environment:
+      - LOGLEVEL="DEBUG"
   redis:
     image: redis
     ports:
@@ -37,3 +43,5 @@ services:
       - webnet
 networks:
   webnet:
+volumes:
+  socketvolume: {}

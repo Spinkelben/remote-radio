@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='message.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\rmessage.proto\"\x87\x01\n\x07Request\x12\"\n\x04type\x18\x01 \x01(\x0e\x32\x14.Request.CommandType\x12\x0f\n\x07\x63hannel\x18\x02 \x01(\t\"G\n\x0b\x43ommandType\x12\x08\n\x04PLAY\x10\x00\x12\t\n\x05PAUSE\x10\x01\x12\x08\n\x04STOP\x10\x02\x12\x0f\n\x0bSET_CHANNEL\x10\x03\x12\x08\n\x04INFO\x10\x04\"I\n\x08Response\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07\x62itrate\x18\x02 \x01(\x05\x12\r\n\x05\x63odec\x18\x03 \x01(\t\x12\x0f\n\x07success\x18\x04 \x01(\x08\x62\x06proto3')
+  serialized_pb=_b('\n\rmessage.proto\"\x87\x01\n\x07Request\x12\"\n\x04type\x18\x01 \x01(\x0e\x32\x14.Request.CommandType\x12\x0f\n\x07\x63hannel\x18\x02 \x01(\t\"G\n\x0b\x43ommandType\x12\x08\n\x04PLAY\x10\x00\x12\t\n\x05PAUSE\x10\x01\x12\x08\n\x04STOP\x10\x02\x12\x0f\n\x0bSET_CHANNEL\x10\x03\x12\x08\n\x04INFO\x10\x04\"\x89\x01\n\x08Response\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07\x62itrate\x18\x02 \x01(\x05\x12\r\n\x05\x63odec\x18\x03 \x01(\t\x12\x0f\n\x07success\x18\x04 \x01(\x08\x12\r\n\x05title\x18\x05 \x01(\t\x12\r\n\x05\x65xtra\x18\x06 \x01(\t\x12\x10\n\x08location\x18\x07 \x01(\t\x12\x0e\n\x06stereo\x18\x08 \x01(\x08\x62\x06proto3')
 )
 
 
@@ -133,6 +133,34 @@ _RESPONSE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='title', full_name='Response.title', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='Response.extra', index=5,
+      number=6, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='location', full_name='Response.location', index=6,
+      number=7, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='stereo', full_name='Response.stereo', index=7,
+      number=8, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -145,8 +173,8 @@ _RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=155,
-  serialized_end=228,
+  serialized_start=156,
+  serialized_end=293,
 )
 
 _REQUEST.fields_by_name['type'].enum_type = _REQUEST_COMMANDTYPE

@@ -1,4 +1,4 @@
-#Use debian base image, it comes with python
+# Use debian base image, it comes with python
 FROM debian:jessie
 
 # Set the working directory to /app
@@ -23,4 +23,4 @@ RUN usermod -a -G audio root
 RUN pip3 install -r requirements.txt
 
 # Run app.py when the container launches
-CMD ["echo", "command_server.py"]
+CMD ["python3", "-u", "run.py"]

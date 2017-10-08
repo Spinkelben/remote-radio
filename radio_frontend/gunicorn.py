@@ -6,4 +6,4 @@ if os.environ.get('MODE') == 'dev':
 
 print("Test", os.path.dirname(os.path.realpath(__file__)))
 
-bind = '0.0.0.0:8080'
+bind = '0.0.0.0:80'

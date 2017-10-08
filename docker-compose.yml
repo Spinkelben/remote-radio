@@ -11,7 +11,7 @@ services:
       restart_policy:
         condition: on-failure
     ports:
-      - "80:80"
+      - "8080:8080"
     networks:
       - webnet
     depends_on:
@@ -30,6 +30,16 @@ services:
       - socketvolume:/var/sockets
     environment:
       - LOGLEVEL="DEBUG"
+  web-frontend:
+    image: spinkelben/remote-radio-frontend:latest
+    ports:
+      - "80:80"
+    networks:
+      - webnet
+    environment:
+      - MODE=dev
+    volumes:
+      - /media/sf_remote-radio/radio_frontend:/app:ro
   redis:
     image: redis
     ports:

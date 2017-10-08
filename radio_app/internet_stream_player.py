@@ -128,10 +128,10 @@ class InternetStreamPlayer():
             tag_strings = []
             for i in range(0, tags.n_tags()):
                 tag_strings.append(tags.nth_tag_name(i))
-            logging.info("TEST: Tag message with {} tags from {}".format(tag_strings, Gst.Object.get_name(msg.src)))
+            logging.debug("Tag message with {} tags from {}".format(tag_strings, Gst.Object.get_name(msg.src)))
             tags.foreach(self._handle_tag, None)
         else:
-            logging.debug("TEST: Message {} from {}".format(msg.type, msg.src))
+            logging.debug("Message {} from {}".format(msg.type, msg.src))
             #pass
 
     def _handle_tag(self, tag_list, tag, user_data):

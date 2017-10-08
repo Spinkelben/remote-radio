@@ -71,7 +71,7 @@ def current_station():
         name = request.form['name']
         new_station = {'name': name, 'stream_url': stream_url}
         success = play_station(new_station)
-        logging.debug("Station changed successfully = {}".format(success))
+        logging.info("Station changed successfully = {}".format(success))
         new_station['bitrate'] = None
         new_station['codec'] = None
         response = {

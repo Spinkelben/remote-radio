@@ -1,0 +1,24 @@
+<html>
+<head>
+  <title>Remote Radio Player</title>
+</head>
+<body>
+  <h1>Remote Radio Player</h1>
+  {% if success %}
+  <p>Playing station <b>{{ station_info.name }}</b><br>
+  <i>{{ station_info.title }}</i></p>
+  <p>Bitrate: {{ station_info.bitrate }} kbps, {{ station_info.codec }}</p>
+  {% if station_info.stereo %} <p>Stereo</p>  {% endif %}
+  {% endif %}
+  <p>
+  <form action="/change" method="POST">
+    <label>Station name:</label>
+    <input type=text name="name"><br>
+    <label>Station url:</label>
+    <input type=text name="stream_url"><br>
+    <input type="submit" value="Change Station">
+  </form>
+  </p>
+
+</body>
+</html>

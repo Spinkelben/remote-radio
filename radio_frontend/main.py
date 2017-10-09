@@ -16,7 +16,7 @@ def change_station():
     print("POST")
     response = requests.post('http://web-api:8080/api/station/', data=request.form)
     if response.ok:
-        return redirect(url_for('root'))
+        return redirect(url_for('root'))   
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)

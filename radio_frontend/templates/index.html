@@ -1,24 +1,44 @@
-<html>
-<head>
-  <title>Remote Radio Player</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %} Remote Radio Player {% endblock %}
+{% block body %}
+<div class="row">
   <h1>Remote Radio Player</h1>
+</div>
+<div class="row">
+  <div class="col">
   {% if success %}
   <p>Playing station <b>{{ station_info.name }}</b><br>
   <i>{{ station_info.title }}</i></p>
-  <p>Bitrate: {{ station_info.bitrate }} kbps, {{ station_info.codec }}</p>
-  {% if station_info.stereo %} <p>Stereo</p>  {% endif %}
+  {% if station_info.bitrate > 191000 %}
+  <p class="badge badge-success">
+  {% elif station_info.bitrate > 127000 %}
+  <p class="badge badge-warning">
+  {% else %}
+  <p class="badge badge-danger">
   {% endif %}
-  <p>
-  <form action="/change" method="POST">
-    <label>Station name:</label>
-    <input type=text name="name"><br>
-    <label>Station url:</label>
-    <input type=text name="stream_url"><br>
-    <input type="submit" value="Change Station">
-  </form>
-  </p>
-
-</body>
-</html>
+  Bitrate: {{ station_info.bitrate }} kbps</p>
+  <p class="badge badge-info"> {{ station_info.codec|default('None', true) }}</p>
+  {% if station_info.stereo %}
+    <p class="badge badge-success">Stereo</p>
+  {% else %}
+    <p class="badge badge-dark">Mono</p>
+  {% endif %}
+  {% endif %}
+  </div>
+  <div class="col">
+    <p>
+      <form action="/change" method="POST" >
+        <div class="form-group" >
+          <label for="stationName" >Station name</label>
+          <input id="stationName" type=text name="name" class="form-control" placeholder="Type station name"><br>
+        </div>
+        <div class="form-group">
+          <label for="stationStream" >Station url</label>
+          <input id="stationStream" type=text name="stream_url" class="form-control" placeholder="Type station stram url"><br>
+        </div>
+        <button type="submit" class="btn btn-primary">Change Station</button>
+      </form>
+    </p>
+  </div>
+</div>
+{% endblock %}

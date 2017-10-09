@@ -4,9 +4,6 @@ FROM debian:jessie
 # Set the working directory to /app
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY . /app
-
 # Install PyGObject bindings
 RUN apt-get update && apt-get install -y \
     gir1.2-gst-plugins-base-1.0 \
@@ -18,9 +15,11 @@ RUN apt-get update && apt-get install -y \
 
 RUN usermod -a -G audio root
 
-
 # Install any needed packages specified in requirements.txt
 RUN pip3 install -r requirements.txt
+
+# Copy the current directory contents into the container at /app
+COPY . /app
 
 # Run app.py when the container launches
 CMD ["python3", "-u", "run.py"]
